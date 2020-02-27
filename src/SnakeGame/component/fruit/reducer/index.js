@@ -1,6 +1,9 @@
 import {
-    ADD_FRUIT
+    ADD_FRUIT,
 } from '../action'
+import {
+    COLLISION_UPDATE
+} from '../../snake/action'
 
 const initialState = [
     {x: 500, y:250, r:10},
@@ -12,23 +15,27 @@ const initialState = [
     {x: 175, y:20, r:10},
     {x: 120, y:15, r:10},
     {x: 110, y:5, r:10},
-    {x: 49, y:30, r:10},
-    {x: 27, y:13, r:10},
-    {x: 15, y:12, r:10},
-    {x: 44, y:46, r:10},
-    {x: 9, y:32, r:10},
+
 ];
 
 export default (state = initialState, action) => {
+
+
     switch(action.type){
         case ADD_FRUIT:
             return [
                 ...state.slice(1,9),
                 action.payload
             ]
+        case COLLISION_UPDATE:
+            return removeFruit(state,action.payload);
         default:
             return state
     }
+}
+
+function removeFruit(state, payload) {
+    return state.filter(e => !(e.x === payload.x  && e.y === payload.y));
 }
 
 export function getFruits (state) {

@@ -1,5 +1,5 @@
 import {
-    UPDATE_CIRCLE, UPDATE_DIRECTION
+    UPDATE_CIRCLE, UPDATE_DIRECTION, COLLISION_UPDATE
 } from '../action'
 
 const initialState = {
@@ -18,15 +18,36 @@ const initialState = {
                 }
 };
 
+
+
 export default (state = initialState, action) => {
     switch(action.type){
         case UPDATE_CIRCLE:
             return determineUpdate(state);
         case UPDATE_DIRECTION:
             return determineNewDirection(state, action.payload);
+        case COLLISION_UPDATE:
+            return determineUpdateSnake(state, action.payload);
         default:
             return state
     }
+}
+
+
+function determineUpdateSnake(state, update) {
+    if (update != "") {
+        return {
+            ...state,
+            snakearray: {
+                head: {
+                    ...state.snakearray.head
+                },
+                body: state.snakearray.body.concat(state.snakearray.body[state.snakearray.body.length-1])
+
+            }
+        }
+    }
+    return{ ...state};
 }
 
 function determineNewDirection(state, direction){
