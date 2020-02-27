@@ -8,7 +8,7 @@ const initialState = {
                     x: 50,
                     y: 25,
                     r: 7,
-                    direction: 0
+                    direction: 0 // 0 x nach rechts
                 }
                 }
 };
@@ -16,9 +16,23 @@ const initialState = {
 export default (state = initialState, action) => {
     switch(action.type){
         case UPDATE_CIRCLE:
+            return determineUpdate(state);
+        default:
+            return state
+    }
+}
+
+function determineUpdate(state){
+    switch (state.snakearray.head.direction){
+        case 0:
             return {
                 ...state,
-                snakearray: action.payload
+                snakearray:{
+                    head: {
+                        ...state.snakearray.head,
+                        x: state.snakearray.head.x + 7
+                    }
+                }
             }
         default:
             return state
@@ -26,7 +40,7 @@ export default (state = initialState, action) => {
 }
 
 export function getSnake (state) {
-    return [
-        ...state.fruits
-    ]
+    return {
+        ...state.snake
+    }
 }

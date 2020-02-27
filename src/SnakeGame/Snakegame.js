@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Fruit from "./component/Fruit";
+import Snake from "./component/Snake";
 import {useEffect} from "react";
 import {dispatchNewFruit} from '../SnakeGame/component/fruit/action'
 import {updateCircle} from '../SnakeGame/component/snake/action'
@@ -23,7 +24,9 @@ export const Snakegame = ({width = 500, height = 250, backgroundColor = "white",
     return (
         <svg style={{width, height, backgroundColor}}>
             {fruitarray.map((e, index) => <Fruit key={index} x={e.x} y={e.y} r={e.r}/>)}
-
+            {<Snake x = {snakearray.snakearray.head.x}
+                    y = {snakearray.snakearray.head.y}
+                    r = {snakearray.snakearray.head.r}/>}
         </svg>
     );
 };
