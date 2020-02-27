@@ -3,7 +3,14 @@ import {
 } from '../action'
 
 const initialState = {
-    snakearray: {x: 50, y:25, r:7}
+    snakearray: {
+                head: {
+                    x: 50,
+                    y: 25,
+                    r: 7,
+                    direction: 0
+                }
+                }
 };
 
 export default (state = initialState, action) => {
