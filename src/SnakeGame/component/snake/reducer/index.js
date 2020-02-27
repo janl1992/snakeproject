@@ -9,7 +9,12 @@ const initialState = {
                     y: 25,
                     r: 7,
                     direction: 0 // 0 x nach rechts
-                }
+                },
+                body:[
+                    {x:36,y:25,r:7},
+                    {x:22,y:25,r:7},
+                    {x:8,y:25,r:7}
+                ]
                 }
 };
 
@@ -31,12 +36,33 @@ function determineUpdate(state){
                     head: {
                         ...state.snakearray.head,
                         x: state.snakearray.head.x + 7
-                    }
+                    },
+                    body: calcBody(state)
+
                 }
+
             }
         default:
             return state
     }
+}
+
+function calcBody(state){
+    const body = state.snakearray.body;
+    return body.map((value,index)=>{
+        if(index===0){
+            return  {
+                ...state.snakearray.head,
+                x: state.snakearray.head.x - 7
+            }
+        }else {
+            return {
+                ...state.snakearray.body[index-1],
+                x: state.snakearray.body[index-1].x - 7
+            }
+        }
+    })
+
 }
 
 export function getSnake (state) {

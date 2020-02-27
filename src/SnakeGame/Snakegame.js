@@ -26,7 +26,7 @@ export const Snakegame = ({width = 500, height = 250, backgroundColor = "white",
             {fruitarray.map((e, index) => <Fruit key={index} x={e.x} y={e.y} r={e.r}/>)}
             {<Snake x = {snakearray.snakearray.head.x}
                     y = {snakearray.snakearray.head.y}
-                    r = {snakearray.snakearray.head.r}/>}
+                    r = {snakearray.snakearray.head.r} body={snakearray.snakearray.body}/>}
         </svg>
     );
 };

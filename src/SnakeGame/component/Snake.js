@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Fruit from "./Fruit";
-export function Snake ({x,y,r}){
+export function Snake ({x, y, r, body}){
     return (
+        <React.Fragment>
         <circle
             cx = {x}
             cy = {y}
@@ -10,7 +10,18 @@ export function Snake ({x,y,r}){
                 fill: 'black'
             }}
         />
-    );
+    {body.map((element) => (
+        <circle
+            cx = {element.x}
+            cy = {element.y}
+            r = {element.r}
+            style={{
+                fill: 'black'
+            }}
+        />
+
+    ))}
+        </React.Fragment>)
 };
 
 export default Snake;
