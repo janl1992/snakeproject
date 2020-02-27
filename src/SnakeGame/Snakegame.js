@@ -23,6 +23,7 @@ export const Snakegame = ({width = 500, height = 250, backgroundColor = "white",
     return (
         <svg style={{width, height, backgroundColor}}>
             {fruitarray.map((e, index) => <Fruit key={index} x={e.x} y={e.y} r={e.r}/>)}
+
         </svg>
     );
 };
