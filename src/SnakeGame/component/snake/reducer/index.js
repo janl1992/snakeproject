@@ -1,5 +1,5 @@
 import {
-    UPDATE_CIRCLE
+    UPDATE_CIRCLE, UPDATE_DIRECTION
 } from '../action'
 
 const initialState = {
@@ -22,9 +22,34 @@ export default (state = initialState, action) => {
     switch(action.type){
         case UPDATE_CIRCLE:
             return determineUpdate(state);
+        case UPDATE_DIRECTION:
+            return determineNewDirection(state, action.payload);
         default:
             return state
     }
+}
+
+function determineNewDirection(state, direction){
+    var newDirection = state.snakearray.head.direction + direction;
+    if (newDirection === 4){
+        newDirection = 0
+    }
+    if(newDirection === -1){
+        newDirection = 3
+    }
+    return {
+        ...state,
+        snakearray:{
+            head: {
+                ...state.snakearray.head,
+                direction: newDirection
+            },
+            body: state.snakearray.body
+
+        }
+
+    }
+
 }
 
 function determineUpdate(state){
@@ -35,7 +60,46 @@ function determineUpdate(state){
                 snakearray:{
                     head: {
                         ...state.snakearray.head,
-                        x: state.snakearray.head.x + 7
+                        x: state.snakearray.head.x + 14
+                    },
+                    body: calcBody(state)
+
+                }
+
+            }
+        case 1:
+            return {
+                ...state,
+                snakearray:{
+                    head: {
+                        ...state.snakearray.head,
+                        y: state.snakearray.head.y - 14
+                    },
+                    body: calcBody(state)
+
+                }
+
+            }
+        case 2:
+            return {
+                ...state,
+                snakearray:{
+                    head: {
+                        ...state.snakearray.head,
+                        x: state.snakearray.head.x - 14
+                    },
+                    body: calcBody(state)
+
+                }
+
+            }
+        case 3:
+            return {
+                ...state,
+                snakearray:{
+                    head: {
+                        ...state.snakearray.head,
+                        y: state.snakearray.head.y + 14
                     },
                     body: calcBody(state)
 
@@ -53,12 +117,12 @@ function calcBody(state){
         if(index===0){
             return  {
                 ...state.snakearray.head,
-                x: state.snakearray.head.x - 7
+                x: state.snakearray.head.x
             }
         }else {
             return {
                 ...state.snakearray.body[index-1],
-                x: state.snakearray.body[index-1].x - 7
+                x: state.snakearray.body[index-1].x
             }
         }
     })
