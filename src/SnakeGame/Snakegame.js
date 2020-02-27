@@ -3,23 +3,24 @@ import {useEffect} from 'react';
 import Fruit from "./component/Fruit";
 import Snake from "./component/Snake";
 import {dispatchNewFruit} from '../SnakeGame/component/fruit/action'
-import {updateCircle, updateDirection,checkFruitSnakeCollision} from '../SnakeGame/component/snake/action'
+import {updateCircle, updateDirection,checkFruitSnakeCollision,checkSnakeSnakeCollision} from '../SnakeGame/component/snake/action'
 import {getFruits} from '../SnakeGame/component/fruit/reducer'
 import {getSnake} from '../SnakeGame/component/snake/reducer'
 import {connect} from 'react-redux';
 import {useChangeDirection} from './changeDirection';
 import {useRef} from "react";
 
-export const Snakegame = ({width = 500, height = 250, backgroundColor = "white", dispatchNewFruit, fruitarray, snakearray, updateCircle, updateDirection, checkFruitSnakeCollision}) => {
+export const Snakegame = ({width = 760, height = 500, backgroundColor = "white", dispatchNewFruit, fruitarray, snakearray, updateCircle, updateDirection, checkFruitSnakeCollision,checkSnakeSnakeCollision}) => {
 
     useInterval(() => {
         // Your custom logic here
-        dispatchNewFruit({x: Math.random() * Math.floor(width), y: Math.random() * Math.floor(height), r: 10})
+        dispatchNewFruit({x: Math.random() * Math.floor(width), y: Math.random() * Math.floor(height-15), r: 15})
     },1200);
 
     useInterval(() => {
-        updateCircle({x: Math.random() * Math.floor(width), y: Math.random() * Math.floor(height), r: 10});
+        updateCircle({x: Math.random() * Math.floor(width), y: Math.random() * Math.floor(height-15), r: 15});
         checkFruitSnakeCollision(fruitarray,snakearray);
+        checkSnakeSnakeCollision(snakearray,width,height);
     }, 250);
 
     useChangeDirection(updateDirection);
@@ -53,7 +54,7 @@ function useInterval(callback, delay) {
     }, [delay]);
 }
 
-const mapDispatchToProps = {dispatchNewFruit, updateCircle, updateDirection,checkFruitSnakeCollision};
+const mapDispatchToProps = {dispatchNewFruit, updateCircle, updateDirection,checkFruitSnakeCollision,checkSnakeSnakeCollision};
 const mapStateToProps = state => {
     return {
         fruitarray: getFruits(state),

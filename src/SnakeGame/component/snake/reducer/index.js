@@ -1,19 +1,19 @@
 import {
-    UPDATE_CIRCLE, UPDATE_DIRECTION, COLLISION_UPDATE
+    UPDATE_CIRCLE, UPDATE_DIRECTION, COLLISION_UPDATE, SNAKE_COLLISION
 } from '../action'
 
 const initialState = {
     snakearray: {
                 head: {
-                    x: 50,
-                    y: 25,
-                    r: 7,
+                    x: 70,
+                    y: 10,
+                    r: 10,
                     direction: 0 // 0 x nach rechts
                 },
                 body:[
-                    {x:36,y:25,r:7},
-                    {x:22,y:25,r:7},
-                    {x:8,y:25,r:7}
+                    {x:50,y:10,r:10},
+                    {x:30,y:10,r:10},
+                    {x:10,y:10,r:10}
                 ]
                 }
 };
@@ -28,14 +28,24 @@ export default (state = initialState, action) => {
             return determineNewDirection(state, action.payload);
         case COLLISION_UPDATE:
             return determineUpdateSnake(state, action.payload);
+        case SNAKE_COLLISION:
+            return determineKillSnake(state, action.payload);
         default:
             return state
     }
 }
 
+function determineKillSnake(state, update) {
+    if (update !== 0) {
+        return "";
+    }
+    return{ ...state};
+}
+
+
 
 function determineUpdateSnake(state, update) {
-    if (update != "") {
+    if (update !== 0) {
         return {
             ...state,
             snakearray: {
@@ -81,7 +91,7 @@ function determineUpdate(state){
                 snakearray:{
                     head: {
                         ...state.snakearray.head,
-                        x: state.snakearray.head.x + 14
+                        x: state.snakearray.head.x + 20
                     },
                     body: calcBody(state)
 
@@ -94,7 +104,7 @@ function determineUpdate(state){
                 snakearray:{
                     head: {
                         ...state.snakearray.head,
-                        y: state.snakearray.head.y - 14
+                        y: state.snakearray.head.y - 20
                     },
                     body: calcBody(state)
 
@@ -107,7 +117,7 @@ function determineUpdate(state){
                 snakearray:{
                     head: {
                         ...state.snakearray.head,
-                        x: state.snakearray.head.x - 14
+                        x: state.snakearray.head.x - 20
                     },
                     body: calcBody(state)
 
@@ -120,7 +130,7 @@ function determineUpdate(state){
                 snakearray:{
                     head: {
                         ...state.snakearray.head,
-                        y: state.snakearray.head.y + 14
+                        y: state.snakearray.head.y + 20
                     },
                     body: calcBody(state)
 
